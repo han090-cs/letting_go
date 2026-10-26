@@ -1,0 +1,25 @@
+{
+  "name": "letting-go",
+  "private": true,
+  "version": "3.3.0",
+  "type": "module",
+  "description": "A private, ephemeral, offline-first web app for writing down and releasing what feels heavy.",
+  "author": "han090-cs (https://github.com/han090-cs)",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "check": "npm test && npm run build"
+  },
+  "devDependencies": {
+    "@fontsource/noto-sans-myanmar": "5.2.7",
+    "typescript": "5.8.3",
+    "vite": "7.3.7",
+    "vitest": "5.0.3"
+  }
+}

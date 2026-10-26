@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#F1F5F2" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#16201D" media="(prefers-color-scheme: dark)" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Letting Go" />
+    <meta name="description" content="Letting Go — a private, ephemeral space to write, release and let go of what feels heavy. Nothing is saved." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Letting Go — A Quiet Place to Release" />
+    <meta property="og:description" content="Write what feels heavy. Watch it burn, drift or blow away. Nothing is saved, nothing is judged." />
+    <meta name="twitter:card" content="summary" />
+    <title>Letting Go — A Quiet Place to Release</title>
+    <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+    <link rel="icon" href="./favicon-48.png" sizes="48x48" type="image/png" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+  </head>
+  <body>
+    <noscript><p style="font:16px/1.7 system-ui;padding:32px;max-width:520px;margin:auto">Letting Go needs JavaScript to run. It stays on your device — nothing you write is sent anywhere.<br /><br />Letting Go ကို အသုံးပြုဖို့ JavaScript လိုအပ်ပါတယ်။ ရေးသမျှ ဒီစက်ထဲမှာပဲ ရှိပြီး ဘယ်ကိုမှ မပို့ပါဘူး။</p></noscript>
+    <main id="app" data-stage="start" aria-label="Letting Go">
+      <div id="sky" class="sky" aria-hidden="true"></div>
+      <canvas id="world" aria-hidden="true"></canvas>
+      <p id="live" class="sr-only" role="status" aria-live="polite"></p>
+
+      <header class="topbar">
+        <span class="brand">Letting Go</span>
+        <div class="top-actions">
+          <select id="language" aria-label="Language">
+            <option value="en">English</option>
+            <option value="my">မြန်မာ</option>
+            <option value="ja">日本語</option>
+            <option value="zh">中文</option>
+            <option value="ar">العربية</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="ko">한국어</option>
+          </select>
+          <button id="wipeBtn" class="icon-btn" type="button" aria-label="Clear everything" hidden><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg></button>
+          <button id="aboutBtn" class="icon-btn" type="button" aria-label="About"><span class="i">i</span></button>
+        </div>
+      </header>
+
+      <section class="hero" data-show="start writing">
+        <div class="hero-text inl" data-show="start">
+          <div class="emblem" aria-hidden="true"></div>
+          <h1 id="headline"></h1>
+          <p class="subhead" id="subhead"></p>
+          <p class="starts-q" id="startQ"></p>
+          <div class="starts" id="starts"></div>
+          <p class="privacy-line" id="privacyLine"></p>
+          <button type="button" id="wishStartBtn" class="text-btn wish-link"><svg class="lt-ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4h8M9 4c-2 2-3 5-3 8 0 2 1 4 2 5h8c1-1 2-3 2-5 0-3-1-6-3-8M9 17l1 3h4l1-3M12 9v4"/></svg><span id="wishStartLbl"></span></button>
+        </div>
+        <p class="hint inl" id="hint" data-show="writing"></p>
+        <form id="releaseForm" class="composer" autocomplete="off">
+          <textarea id="thoughtInput" rows="1" maxlength="1200" enterkeyhint="send" autocapitalize="sentences" spellcheck="false"></textarea>
+          <div class="composer-row">
+            <button type="button" id="letgoBtn" class="text-btn inl" data-show="writing"></button>
+            <button type="submit" id="dropBtn" class="drop-btn"><span id="dropLabel"></span><span aria-hidden="true">↓</span></button>
+          </div>
+        </form>
+      </section>
+
+      <section id="choose" class="choose" data-show="choose">
+        <button type="button" id="backBtn" class="back">←</button>
+        <p class="q" id="feelQ"></p>
+        <div class="chips" id="chips" role="group" aria-labelledby="feelQ"></div>
+        <p class="q" id="weightQ"></p>
+        <div class="scale" id="preScale" role="radiogroup" aria-labelledby="weightQ"></div>
+        <p class="q" id="chooseQ"></p>
+        <div class="rituals">
+          <button class="ritual" data-release="fire" type="button"><span class="ritual-icon" aria-hidden="true">✦</span><span class="ritual-text"><strong id="fireTitle"></strong><small id="fireDesc"></small></span></button>
+          <button class="ritual" data-release="water" type="button"><span class="ritual-icon" aria-hidden="true">≈</span><span class="ritual-text"><strong id="waterTitle"></strong><small id="waterDesc"></small></span></button>
+          <button class="ritual" data-release="wind" type="button"><span class="ritual-icon" aria-hidden="true">⌁</span><span class="ritual-text"><strong id="windTitle"></strong><small id="windDesc"></small></span></button>
+        </div>
+      </section>
+
+      <section id="restoration" class="rest" data-show="rest">
+        <p class="grounding" id="grounding"></p>
+        <div class="breath" id="breath" hidden>
+          <div class="breath-orb" id="breathOrb" aria-hidden="true"></div>
+          <p class="breath-label" id="breathLabel" role="status" aria-live="polite"></p>
+        </div>
+        <div class="after" id="after">
+          <p class="q" id="afterQ"></p>
+          <div class="scale" id="postScale" role="radiogroup" aria-labelledby="afterQ"></div>
+          <p class="verdict" id="verdict" role="status" aria-live="polite"></p>
+        </div>
+        <p class="wish-nudge" id="wishNudge"></p>
+        <div class="rest-actions">
+          <button id="wishBtn" class="text-btn wish-link" type="button"><svg class="lt-ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4h8M9 4c-2 2-3 5-3 8 0 2 1 4 2 5h8c1-1 2-3 2-5 0-3-1-6-3-8M9 17l1 3h4l1-3M12 9v4"/></svg><span id="wishBtnLbl"></span></button>
+          <button id="breatheBtn" class="text-btn" type="button"></button>
+          <button id="freshBtn" class="text-btn" type="button"></button>
+        </div>
+      </section>
+
+      <section id="wish" class="choose wish" data-show="wish">
+        <button type="button" id="wishBack" class="back">←</button>
+        <p class="q" id="wishQ"></p>
+        <form id="wishForm" class="composer" autocomplete="off">
+          <textarea id="wishInput" rows="2" maxlength="90" enterkeyhint="send" spellcheck="false"></textarea>
+          <button type="submit" id="wishGo" class="drop-btn"><span id="wishGoLbl"></span><span aria-hidden="true">↑</span></button>
+        </form>
+        <div class="wish-starts" id="wishStarts"></div>
+        <p class="wish-sent" id="wishSent" role="status" aria-live="polite"></p>
+        <button type="button" id="wishDone" class="text-btn"></button>
+      </section>
+
+      <aside id="care" class="care" role="status" inert>
+        <div><p id="careText"></p><a id="careLink" href="https://findahelpline.com" target="_blank" rel="noopener noreferrer"></a></div>
+        <button id="careClose" class="icon-btn" type="button" aria-label="Close">×</button>
+      </aside>
+
+      <div id="about" class="about" role="dialog" aria-modal="true" aria-labelledby="aboutTitle" inert>
+        <div class="about-sheet">
+          <button id="aboutClose" class="icon-btn about-close" type="button" aria-label="Close">×</button>
+          <div id="aboutBody"></div>
+        </div>
+      </div>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
